@@ -1,0 +1,198 @@
+﻿@{
+    ViewBag.Title = "Validation";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Client Side Validation
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Editing/OnEmployeeDataRequested",
+        editurl: '/Editing/EditEmployeeData',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },  
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            { editable: true, width: 60, name: "LastName", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 60, name: "FirstName", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 120, name: "Title", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "cn", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 0, name: "BirthDate", hidden: true, search: false, formatter: "date",
+                  formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true } },
+            { editable: true, width: 60, name: "HireDate", search: false, formatter: "date",
+                  formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true } },
+            { editable: true, width: 110, name: "Address", search: false, editrules: { required: true } },
+            { editable: true, width: 50, name: "City", search: false, editrules: { required: true } },
+            { editable: true, width: 40, name: "Region", search: false },
+            { editable: true, width: 60, name: "PostalCode", search: false, editrules: { required: true } },
+            { editable: true, width: 50, name: "Country", search: false, edittype: "select", 
+                  editoptions: { dataUrl: "/Editing/CountriesSelectList" } },
+            { editable: true, width: 70, name: "HomePhone", search: false,
+                  editrules: { required: true, custom: true, custom_func: JQGridDemo.usaUkPhoneNumberCheck } },
+            { editable: true, width: 30, name: "Extension", search: false },
+            { editable: true, width: 200, name: "PhotoPath", formatter: "link", search: false,
+                  editrules: { custom: true, custom_func: JQGridDemo.allowedImageLinkCheck } }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    }).jqGrid('navGrid', '#JQGrid1_pager', { edit: true, add: true, del: true, search: true, view: false, refresh: true },
+    { // edit options 
+        closeAfterEdit: true
+    },
+    { // add options 
+        beforeShowForm: function (form) {
+            $("#tr_BirthDate", form).show();
+        },
+        closeAfterAdd: true
+    },
+    { // del options 
+    });
+
+</script>
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        jqGrid offers a variety of options for performing client-side validation. These options are 
+        set by configuring the <b>editrules</b> property. You can designate a field as <b>required</b>,
+        specify that it must be a <b>number</b>, or an <b>integer</b>, or that it adhere to the requirements
+        of being a proper <b>email</b> address, or the <b>url</b> of a website, or have a valid <b>time</b>
+        or <b>date</b> format. In addition, you can specify a numeric range with <b>minValue</b> and
+        <b>maxValue</b>, and if none of the pre-defined validators are appropriate, you can create a
+        <b>custom</b> validator. In the illustration below:
+    </p>
+    <ol>
+        <li>I have specified <b>required</b> on most of the columns.</li>
+        <li>The <b>date</b> validator automatically checks that entries follow "Y-m-d" format</li>
+        <li>I have created two <b>custom</b> functions to check that (a) phone numbers follow 
+            either USA or UK format, and (b) the links to employee photos are without gross syntax
+            errors and may be in bmp, jpg, or png format. 
+        </li>
+        <li>In addition, I modified the <b>Country</b> column to use a dropdown list which is
+            populated via an ajax call to the back end.
+        </li>
+    </ol>
+    
+    <img class="bordered-outline" src="~/Images/Validation.png" />
+    <p>
+        A custom validator function accepts two parameters (the cell value and the column name) and 
+        returns an array, the first element of which is a Boolean value indicating whether the
+        validation passed or not, and element is an error message string which is displayed if
+        the Boolean is false: 
+    </p>
+    <img class="bordered-outline" src="~/Images/CustomValidation.png" />
+</div>
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        For further information on validation, see 
+        <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:common_rules">
+            http://www.trirand.com/jqgridwiki/doku.php?id=wiki:common_rules </a>
+    </p>
+
+</div>
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<h3><em>Edit Select List Ordering</em></h3> 
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid2"></table>
+    <div id="JQGrid2_pager"></div>
+</div>
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        <span class="warning">If you are using a hard-coded select list to limit edit entries in a grid cell, then you should be aware that there
+        are two means of initializing the select list that have distinctly different effects:</span>
+    </p>
+    <ol>
+        <li>You can initialize the select list with an associative array.</li>
+        <li>You can initialize the select list with a string.</li>
+    </ol>
+    <p>
+        Suppose that you have an alphabetical list of the original U.S. colonies keyed by their order of ratification of the Constitution.
+        Since you intend the colonies to be displayed alphabetically, the order of the keys is jumbled: 
+    </p>
+        <img class="bordered-outline" src="~/Images/Validation_1.png" />
+    <p>
+        The BirthPlace edit dropdown is initialized with the associative array, while the DeathPlace edit dropdown is initialized
+        with the string:
+    </p>
+         <img class="bordered-outline" src="~/Images/Validation_3.png" />   
+    <p>
+        The BirthPlace edit dropdown of the Founding Fathers grid ignores your ordering, but instead orders the list
+        by the state's order of ratification of the Constitution. On the other hand, 
+        the DeathPlace edit dropdown will be in the order in which you created the list:       
+    </p>
+        <img class="bordered-outline" src="~/Images/Validation_2.png" />   
+    <p>
+        <br />
+    </p>
+</div>
+
+<script>
+    $("#JQGrid2").jqGrid({
+        url: "/Editing/OnFoundingFatherDataRequested",
+        editurl: '/Editing/EditFoundingFather',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "Id" },
+        prmNames: { id: "Id" },
+        colModel: [
+            { key: true, width: 50, name: "Id", hidden: true, search: false, label: "Id" },
+            {
+                editable: true, width: 150, name: "Name", search: false, stype: "text", label: "Name",
+                editrules: { required: true }
+            },
+            {
+                editable: true, width: 150, name: "BirthPlace", search: false, stype: "select", edittype: "select", label: "Birth Place",
+                editrules: { required: true }, editoptions: { value: JQGridDemo.stateArray }, formatter: JQGridDemo.customFormatter
+            },
+            {
+                editable: true, width: 150, name: "DeathPlace", search: false, stype: "select", edittype: "select", label: "Death Place",
+                editrules: { required: true }, editoptions: { value: JQGridDemo.stateString }, formatter: JQGridDemo.customFormatter
+            },
+        ],
+        reloadAfterSubmit: true,
+        height: "auto",
+        caption: "Founding Fathers",
+        rowNum: 5,
+        pager: "#JQGrid2_pager",
+    }).jqGrid('navGrid', '#JQGrid2_pager', { edit: true, add: true, del: true, search: false, view: false, refresh: true },
+    { // edit options 
+        closeAfterEdit: true,
+    },
+    { // add options 
+        closeAfterAdd: true,
+    },
+    { // del options 
+    });
+</script>

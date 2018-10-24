@@ -1,0 +1,86 @@
+﻿@{
+    ViewBag.Title = "Getting Started";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Initial Setup 
+</div>
+<hr class="page-title-separator" />
+
+
+<div class="page-text-block">
+    <ol>
+        <li>Please look up, read and respect the <a href="http://www.trirand.com/blog/?page_id=154">
+            free licensing terms that Trirand has published on their web site</a>. 
+        </li>
+        <li>This MVC 4 application was developed in Visual Studio 2013 using the .NET 4.5 Framework,
+            Entity Framework 6.1.1, and the Razor engine. I have tried to make installation as painless
+            as possible, but it is possible that I have overlooked something. I have included the necessary
+            jQuery and jqGrid files.
+        </li>
+        <li>
+            <span class="warning">In the Web.config, check that the <b>binding redirect</b> is set to point 
+            to the version of <b>System.Web.Mvc</b> that you are using. Check the Web.config file for any other 
+            version mismatches.</span>
+        </li>
+        <li>Download and install the <a href="http://northwinddatabase.codeplex.com/">Northwind sample database</a>, 
+            and set the data source of the "NorthwindEntities" connection string appropriately. 
+        </li>
+        <li>
+            The version of SQL Server or SQL Server Express should be at least 2008. <span class="warning">
+            Otherwise you can get
+            "The version of SQL Server in use does not support datatype datetime2" while attempting to add new records
+            into tables that have a datetime field.</span> See
+            <a href="http://stackoverflow.com/questions/10224406/the-version-of-sql-server-in-use-does-not-support-datatype-datetime2">
+            this Stack Overflow article.</a>
+        </li>
+        <li>
+            NuGet is configured to (1) download the NuGet.exe file, then (2) to
+            check the dependencies listed in packages.config and to download the dependencies into the
+            packages folder.
+        </li>
+        <li>While I was setting up this demo, I found that the Entity Framework 5.0 "database first" tools were a bit buggy. 
+        Among other annoyances, <b>the Employee.cs file kept disappearing</b> every time that I regenerated the 
+        Northwind.tt template. I have since upgraded to version 6.1.1, and here's hoping that you don't experience
+        the same annoyances that I did. 
+        </li>
+        <li>
+            If the connection to the Northwind database has been properly set up, the table below should be populated:
+        </li>
+    </ol>
+</div>
+
+<div style="clear:both"></div>
+<div>
+    <div class="page-content-offset"></div>
+    <div class="page-content">
+        <table id="JQGrid1"></table>
+    </div>
+    <div style="clear:both">
+        <br />
+    </div>
+    <p>
+        <br />
+    </p>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Intro/OnEmployeeDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        colModel: [
+            { width: 50, name: "EmployeeID", hidden: true, label: "EmployeeID" },
+            { width: 60,  name: "LastName", label: "Last Name" },
+            { width: 60,  name: "FirstName", label: "First Name" },
+            { width: 120, name: "Title", label: "Title" }
+        ],
+        height: 90,
+        loadError: loadAlert
+    });
+
+    function loadAlert(xht) {
+        alert("The grid failed to load.");
+    }
+</script>

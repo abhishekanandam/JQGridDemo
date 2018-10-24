@@ -1,0 +1,57 @@
+﻿@{
+    ViewBag.Title = "First Grid";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    First Grid
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+
+<div class="page-content">
+    <table id="JQGrid1"></table>
+</div>
+
+<script>
+    var dataArray = [
+        { FirstName: "Nancy", Title: "Sales Representative" },
+        { FirstName: "Andrew", Title: "Vice President, Sales" }
+    ];
+
+
+    $("#JQGrid1").jqGrid({
+        datatype: "local",
+        data: dataArray,
+        colModel: [
+            { name: "FirstName", label: "Name" },
+            { name: "Title", label: "Title" }
+        ]
+    });
+</script>
+
+<div style="clear: both"></div>
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        For our first few introductory grids, we will be using local data defined in a dataArray. 
+    To create the grid, we simply insert in the html a <b>&lt;table></b> element identified 
+    by an <b>id</b>, 
+    </p>
+    <img class="bordered-outline" src="~/Images/FirstGrid-html.png" />
+    <p>
+        followed by a bit of jQuery selecting the table element and making a call to jqGrid().
+    We pass to this method an associative array of key-value pairs identifying the datatype ("local"), 
+    the source of the data (dataArray), and a column model:   
+    </p>
+    <img class="bordered-outline" src="~/Images/FirstGrid.png" />
+    <p>
+        The grid is not especially pretty, but it is fully functional. We can sort the columns, 
+    and there is space for a scrollbar at the right should we ever have more data than can 
+    fit within the default grid height, which is 150px. 
+    </p>
+    <p>
+        <br />
+    </p>
+</div>

@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = "Master-Detail";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Master-Detail Tables
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+<div class="clear-both small-vertical-spacing"></div>
+<div class="page-content-offset"></div>
+<div id="divJQGrid2" class="page-content">
+    <table id="JQGrid2"></table>
+    <div id="JQGrid2_pager"></div>
+</div>
+
+<script>
+    var lastID = null;
+
+    $("#JQGrid1").jqGrid({
+        url: "/MasterDetail/OnCustomerDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "CustomerID" },
+        prmNames: { id: "CustomerID" },
+        colNames: [" ", "Cust ID", "Company Name", "Contact Name", "Contact Title",
+            "Address", "City", "Region", "Postal Code", "Country", "Phone", "Fax"],
+        colModel: [
+            { width: 10, name: "HasOrders" },
+            { key: true, width: 40, name: "CustomerID" },
+            { width: 120, name: "CompanyName" },
+            { width: 90, name: "ContactName" },
+            { width: 100, name: "ContactTitle" },
+            { width: 140, name: "Address" },
+            { width: 70,  name: "City" },
+            { width: 40,  name: "Region" },
+            { width: 60,  name: "PostalCode" },
+            { width: 50,  name: "Country" },
+            { width: 75,  name: "Phone" },
+            { width: 75, name: "Fax" }
+        ],
+        caption: "Customers",
+        pager: "#JQGrid1_pager",
+        onSelectRow: function (id) {
+            if (lastID !== null) {
+                var lastRowData = jQuery(this).getRowData(lastID);
+                if (lastRowData["HasOrders"] == "-") {
+                    $("#JQGrid1").jqGrid("setCell", lastID, "HasOrders", "+");
+                }
+            }
+            var rowData = jQuery(this).getRowData(id);
+            var hasOrders = rowData["HasOrders"];
+            var company = rowData["CompanyName"];
+            if (hasOrders == "+") {
+                $("#JQGrid1").jqGrid("setCell", id, "HasOrders", "-");
+            }
+            jQuery("#JQGrid2").setGridParam({
+                url: "/MasterDetail/OnOrderDataRequested?id=" + id, page: 1
+            }).setCaption("<b>Orders for " + company + "</b>").trigger('reloadGrid');
+            lastID = id;
+        },
+        // Customizations
+        height: 135,
+        scroll: true,
+        recordtext: "{2} Records", // overrides default set in grid.locale-en.js
+        viewrecords: true, // controls visibility of recordtext
+        rowNum: 100000000, // effectively unlimited page size
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+    $("#JQGrid1_pager_center").hide(); // Hides the central paging control 
+    jQuery('#JQGrid1').bindKeys(); // binds the up/down arrow keys:
+
+    var paramsJQGrid2 = {};
+    paramsJQGrid2.originalColumnWidths = [];
+    paramsJQGrid2.originalGridWidth = 0;
+    paramsJQGrid2.initialized = false;
+    $("#JQGrid2").jqGrid({
+        url: "/MasterDetail/OnOrderDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "OrderID" },
+        prmNames: { id: "OrderID" },
+        colNames: ["Order ID", "Cust ID", "EmployeeID", "Employee Name", "Order Date", "Req Date",
+            "Ship Date", "Ship Via", "Freight", "Ship Name", "Ship Address", "Ship City", "Ship Region",
+            "Ship PC", "Ship Ctry"],
+        colModel: [
+            { key: true, width: 50, name: "OrderID" },
+            { width: 40, name: "CustomerID" },
+            { width: 40, name: "EmployeeID", hidden: true },
+            { width: 90, name: "EmployeeName" },
+            {
+                width: 60, name: "OrderDate",
+                formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+            },
+            {
+                width: 60, name: "RequiredDate",
+                formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+            },
+            {
+                width: 60, name: "ShippedDate",
+                formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+            },
+            { width: 50, name: "ShipVia" },
+            { width: 40, name: "Freight", formatter: "currency" },
+            { width: 110, name: "ShipName" },
+            { width: 90, name: "ShipAddress" },
+            { width: 75, name: "ShipCity" },
+            { width: 60, name: "ShipRegion" },
+            { width: 50, name: "ShipPostalCode" },
+            { width: 65, name: "ShipCountry" }
+        ],
+        caption: "Orders",
+        pager: "#JQGrid2_pager",
+        gridComplete: function () {
+            $("#gview_JQGrid2 .ui-jqgrid-bdiv").css("height", "");
+            $("#gview_JQGrid2 .ui-jqgrid-bdiv").css("max-height", "135px");
+
+            var JQGrid2count = jQuery("#JQGrid2").jqGrid('getGridParam', 'records');
+            if (JQGrid2count === 0) {
+                jQuery("#divJQGrid2").hide();
+            }
+            else {
+                jQuery("#divJQGrid2").show();
+            }
+        },
+        // Customizations
+        recordtext: "{2} Records", // overrides default set in grid.locale-en.js
+        viewrecords: true, // controls visibility of recordtext
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+    $("#JQGrid2_pager_center").hide(); // Hides the central paging control 
+    jQuery('#JQGrid2').bindKeys(); // binds the up/down arrow keys:
+
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Master-detail grids are relatively simple to set up. Essentially, all that one needs to 
+        do is to add a handler function to the <b>onSelectRow</b> event. 
+        The primary key from the selected row is passed to the handler. One sets this
+        key as a Query Parameter in an ajax url, which is used to retrieve the detail rows
+        for populating the target grid. Set the target grid to page 1, set the caption of the
+        target grid, and trigger it to reload:
+    </p>
+    <img class="bordered-outline" src="~/Images/MasterDetail.png" />
+    <p>
+        Other logic alters the appearance of the +/- column that shows which rows have details
+        to expand.
+    </p>
+    <p>
+        <br/>
+    </p>
+</div>
+

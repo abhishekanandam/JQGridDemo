@@ -1,0 +1,138 @@
+﻿@{
+    ViewBag.Title = "Caching";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Memory Caching
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Caching/OnEmployeeDataRequested",
+        editurl: '/Caching/EditEmployeeData',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },  
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            { editable: true, width: 60, name: "LastName", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 60, name: "FirstName", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 120, name: "Title", search: true, stype: "text",
+                  searchoptions: { "sopt": ["bw", "cn", "eq"] }, editrules: { required: true } },
+            { editable: true, width: 0, name: "BirthDate", hidden: true, search: false, formatter: "date",
+                  formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true } },
+            { editable: true, width: 60, name: "HireDate", search: false, formatter: "date",
+                  formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true } },
+            { editable: true, width: 110, name: "Address", search: false, editrules: { required: true } },
+            { editable: true, width: 50, name: "City", search: false, editrules: { required: true } },
+            { editable: true, width: 40, name: "Region", search: false },
+            { editable: true, width: 60, name: "PostalCode", search: false, editrules: { required: true } },
+            { editable: true, width: 50, name: "Country", search: false, edittype: "select", 
+                  editoptions: { dataUrl: "/Editing/CountriesSelectList" } },
+            { editable: true, width: 70, name: "HomePhone", search: false,
+                  editrules: { required: true, custom: true, custom_func: JQGridDemo.usaUkPhoneNumberCheck } },
+            { editable: true, width: 30, name: "Extension", search: false },
+            { editable: true, width: 200, name: "PhotoPath", formatter: "link", search: false,
+                  editrules: { custom: true, custom_func: JQGridDemo.allowedImageLinkCheck } }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager",
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    }).jqGrid('navGrid', '#JQGrid1_pager', { edit: true, add: true, del: true, search: true, view: false, refresh: true },
+    { // edit options 
+        closeAfterEdit: true,
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    },
+    { // add options 
+        beforeShowForm: function (form) {
+            $("#tr_BirthDate", form).show();
+        },
+        closeAfterAdd: true,
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    },
+    { // del options 
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    });
+
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        The grid above has been configured to display five rows at a time. When one examines the network traffic
+        used to fill the grid, one sees, in fact, that five rows of data are in fact passed back from server, 
+        regardless of how may records may have been retrieved in the database query. 
+    </p>
+    <img class="bordered-outline" src="~/Images/Caching_3.png" style="width:66%"  />
+    <p>
+        This is an efficient use of network bandwidth, but it may not necessarily be efficient in terms of the back end.
+        For example, if the original query required retrieving, say, 100000 records, this same 
+        query would be repeated every time one advanced by a single page, or if one sorted on a column.  
+    </p>
+        Caching is a technique of storing data in memory that is expensive to create or retrieve. 
+        If the data does not need to be absolutely, totally up to date, subsequent requests for the data do
+        not need to fetch data from the database; rather, the request can get data from the cache. 
+        By using the cache, one can improve the performance of one's application. 
+    <p>
+        ASP.NET provides two types of caching for improving Web application performance. The one to be
+        discussed here is application data caching. The data cache enables one to programmatically store
+        arbitrary objects in server memory so that one's application can avoid spending the time and resources
+        it takes to recreate them each time they are needed.
+    </p>
+    <p>
+        Caching is implemented by the Cache class. Instances of the cache are private to each instance of 
+        the application. Items are placed and retrieved in the Cache using key/value pairs. In this, the Cache 
+        may at first seem similar to Session variables; however the Cache class offers powerful features that 
+        enables customization of cache characteristics and lifespan. More importantly, under conditions of low
+        memory, the operating system has the ability to evict seldom-used or low-priority items to free memory. 
+    </p>
+    <p>    
+        One can configure the Cache object to give certain items priority over other items when it performs scavenging. 
+        One can also establish an expiration policy for an item. For example, the item can be given an absolute expiration
+        time, or it can be given a sliding expiration. External dependencies can also be specified, so that the cache item
+        can be evicted depending on whether its data source has changed; this may be an external file, a database table,
+        or another cached item.   
+    </p>
+    <p>
+        Below, the cache key is set as the fully qualified controller name, 
+        "JQGridDemo.Controllers.CachingController", and the result of the database query is set into the cache 
+        with an absolute expiration of 60 seconds from its creation:
+    </p>
+        <img class="bordered-outline" src="~/Images/Caching.png" />
+    <p>
+        The cache is evicted, not just on timeout, but any time an edit is made to the table(s) that are the source for
+        the displayed data. Although not shown here, the cache should also be evicted if a change is made 
+        to the view of the data, <i>i.e.</i> if the "where" clause parameters of the "select" query are changed.
+    </p>
+        <img class="bordered-outline" src="~/Images/Caching_2.png" />
+    <p>
+        <br />
+    </p>
+</div>
+

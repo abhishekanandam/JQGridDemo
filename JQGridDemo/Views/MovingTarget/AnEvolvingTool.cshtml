@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "An Evolving Tool";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    An Evolving Tool
+</div>
+<hr class="page-title-separator" />
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Since its first development, jqGrid has undergone frequent revision to (1) fix bugs, (2) add feature
+        enhancements, and to improve both the (3) end-user experience and the (4) developer experience. 
+    </p>
+    <p>
+        These improvements unfortunately have side effects, such that when one uses a search engine to try
+        to figure out how to fix a bug or to implement a feature, one gets frequent hits to solutions that
+        may once upon a time have worked, but which no longer work properly in the current version of the code.   
+        A case in point is when I tried to provide the detail screen in a master-detail view the following 
+        behavior: <span class="warning">I wanted the jqGrid to adjust its height automatically to a given number of rows; 
+        but when a certain height is reached, its height would not increase anymore, but the grid would acquire 
+        a vertical scrollbar.</span>
+    </p>
+    <p>
+        Searching the internet brought up the following 2011 solution by a well-known expert on jqGrid:
+    </p>
+    <img class="bordered-outline" src="~/Images/EvolvingTool.png" />
+    <br />
+    <a href="http://stackoverflow.com/questions/5895801/jqgrid-with-automatic-height-but-has-a-max-height-scrollbars">
+        http://stackoverflow.com/questions/5895801/jqgrid-with-automatic-height-but-has-a-max-height-scrollbars</a>
+    <p>
+        Unfortunately, the above solution didn't work for me: 
+    </p>
+        <img class="bordered-outline" src="~/Images/EvolvingTool_2.png" style="width:750px" />
+    <p>    
+        The developer's best friend may be a good search 
+        engine, but a web UI developer's second-best friend is certainly a suite of web development tools such as
+        Firebug or the Chrome Developer Tools. Using such a tool, I was able to ascertain that the culprit was
+        a height default which apparently was not present in 2011, or which was else implemented differently:
+    </p>
+         <img class="bordered-outline" src="~/Images/EvolvingTool_1.png" />
+    <p>
+        I was able to use the web development tool to work out an alternative to the originally suggested
+        solution:
+    </p>
+        <img class="bordered-outline" src="~/Images/EvolvingTool_3.png" />
+    <p>
+        The result was a detail grid that functioned according to my expectations. 
+    </p>
+    <p>
+        Web development tools are provided by all of the major browsers. Familiarity with one or another of
+        the available tool suites is an extremely valuable skill when working with jqGrid. If one is confronted
+        with a bug or wishes a desired behavior that searching on the Internet or raising a question on a
+        developer forum does not answer, one can frequently work out a solution by directly manipulating the 
+        html markup.  
+    </p>
+    <p>
+        <br />
+    </p>
+</div>

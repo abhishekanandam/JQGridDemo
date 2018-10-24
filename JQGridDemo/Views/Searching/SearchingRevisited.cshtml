@@ -1,0 +1,104 @@
+﻿@{
+    ViewBag.Title = "Searching";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Searching Revisited
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Searching/OnEmployeeDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            {
+                width: 60, name: "LastName",
+                search: true, stype: "text", searchoptions: { "sopt": ["bw", "eq"] }
+            },
+            {
+                width: 60, name: "FirstName",
+                search: true, stype: "text", searchoptions: { "sopt": ["bw", "eq"] }
+            },
+            {
+                width: 120, name: "Title",
+                search: true, stype: "text", searchoptions: { "sopt": ["bw", "cn", "eq"] }
+            },
+            { width: 0, name: "BirthDate", hidden: true, search: false },
+            {
+                width: 60, name: "HireDate", search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+            },
+            { width: 110, name: "Address", search: false },
+            { width: 50, name: "City", search: false },
+            { width: 40, name: "Region", search: false },
+            { width: 60, name: "PostalCode", search: false },
+            { width: 50, name: "Country", search: false },
+            { width: 70, name: "HomePhone", search: false },
+            { width: 30, name: "Extension", search: false },
+            { width: 200, name: "PhotoPath", formatter: "link", search: false }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    }).jqGrid('navGrid', '#JQGrid1_pager',
+        { edit: false, add: false, del: false, search: true, view: false, refresh: true });
+
+</script>
+
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Up until this point, all the grid configuration that I have demonstrated has been via manipulation of the 
+        array of parameters in the client-side $().jqGrid() function call. If you look at the metadata definition of the
+        <b>JQGrid</b> class as defined in the Trirand.Web.Mvc assembly, you will note the existence of a considerable
+        number of properties that can be set on the server-side, as well as some useful methods that can be called. 
+        Although many of the properties appear to duplicate properties that can also be set on the client-side, 
+        the correspondence is by no means exact.
+    </p>
+    <p>
+        Setting up a search on data from a backend requires a combination of client-side and server-side 
+        configuration. The client-side setup has nothing surprising:
+    </p>
+    <img class="bordered-outline" src="~/Images/ClientSideSearchSetup.png" />
+    <p>
+        In the controller, I have defined <b>SetupEmployeeJQGrid()</b> as a method to be called by both 
+        <b>Employees()</b> and <b>OnEmployeeDataRequested()</b>. <span class="warning">In this method, I set the DataType 
+        property of the searchable columns to <b>typeof(string)</b> even though setting <b>stype:&nbsp;"text"</b>
+        in the cshtml code seemingly should have been able to set the search type of the field.</span> 
+        <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:search_config">
+            http://www.trirand.com/jqgridwiki/doku.php?id=wiki:search_config</a> 
+    </p>
+    <img class="bordered-outline" src="~/Images/SetupEmployee.png" />
+    <p>    
+        The error message that you want to avoid is:
+    </p>
+    <p>
+        <span class="warning">
+            <b>"DataTypeNotSetException: JQGridColumn.DataType must be set in order to perform search operations."</b>
+        </span>
+    </p>
+    <p>
+        <br/>
+    </p>
+</div>

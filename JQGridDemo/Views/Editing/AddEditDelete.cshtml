@@ -1,0 +1,123 @@
+﻿@{
+    ViewBag.Title = "Add/Edit/Delete";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Add/Edit/Delete
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Editing/OnEmployeeDataRequested",
+        editurl: '/Editing/EditEmployeeData',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },  
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            { editable: true, width: 60, name: "LastName",  search: true, stype: "text", searchoptions: { "sopt": ["bw", "eq"] } },
+            { editable: true, width: 60, name: "FirstName", search: true, stype: "text", searchoptions: { "sopt": ["bw", "eq"] } },
+            { editable: true, width: 120, name: "Title", search: true, stype: "text", searchoptions: { "sopt": ["bw", "cn", "eq"] } },
+            { editable: true, width: 0, name: "BirthDate", hidden: true, search: false },
+            {
+                editable: true, width: 60, name: "HireDate", search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+            },
+            { editable: true, width: 110, name: "Address", search: false },
+            { editable: true, width: 50, name: "City", search: false },
+            { editable: true, width: 40, name: "Region", search: false },
+            { editable: true, width: 60, name: "PostalCode", search: false },
+            { editable: true, width: 50, name: "Country", search: false },
+            { editable: true, width: 70, name: "HomePhone", search: false },
+            { editable: true, width: 30, name: "Extension", search: false },
+            { editable: true, width: 200, name: "PhotoPath", formatter: "link", search: false }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    }).jqGrid('navGrid', '#JQGrid1_pager', { edit: true, add: true, del: true, search: true, view: false, refresh: true },
+    { // edit options 
+        closeAfterEdit: true
+    },
+    { // add options 
+        beforeShowForm: function (form) {
+            $("#tr_BirthDate", form).show();
+        },
+        closeAfterAdd: true
+    },
+    { // del options 
+    } );
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Enabling add/edit/delete functionality requires both client-side configuration and server-side coding.
+    </p>
+    <p>
+        Identifying the primary key column is essential to the add/edit/delete operations. 
+        For certain purposes, the default assumption is that the first column represents the primary key. 
+        This will not necessarily always
+        be the case, so jqGrid provides alternative means for identifying the primary key. 
+        There are at least four different places whereby the primary key column is set. <br />
+        1. via the <b>PrimaryKey = true</b> attribute in <b>EmployeeJQGridModel</b><br />
+        2. via the <b>"key: true"</b> key-value pair in the colModel array<br />
+        3. as the id value associated with <b>prmNames</b><br />
+        4. as the id value associated with <b>jsonReader</b><br />
+        These primary key setters are associated with different parts of the jqGrid code, and I do not know which are
+        important for what. <span class="warning">I do know that, at the very least, setting both the <b>key</b> and
+        the <b>prmNames</b> values are required for editing. For example, if the <b>prmNames</b> is not set, the value
+        of the primary key will not be passed to the <b>HttpPost</b>-handler when you submit an edit.</span> 
+        Adopting a "better safe than sorry" attitude, I routinely set all four values.         
+    </p>
+    <p>
+        In the figure below:
+    </p>
+    <ol>
+        <li>An <b>editurl</b> is identified.</li>
+        <li>The primary key is set in the <b>colModel</b> ("key: true"), <b>prmNames</b>, and <b>jsonReader</b>.</li>
+        <li>I have added "editable: true" to the editable columns.</li>
+        <li>In the <b>navGrid</b>, I have set "edit: true, add: true, del: true, search: true, view: false, refresh: true".</li>
+        <li>In the edit and add options, I have set "closeAfterEdit: true" and "closeAfterAdd: true".
+            (The default behavior of these dialogs to remain open so that a series of changes may be rapidly made).</li>
+        <li>In the add options, I have made visible the hidden BirthDate column.</li>
+        <li>Note that the selector for the BirthDate column is "tr_BirthDate".</li>
+    </ol>
+    <img class="bordered-outline" src="~/Images/AddEditDelete.png" />
+    <p>
+        In the controller, we define an action method corresponding to the <b>editurl</b> referenced in the grid definition.
+    </p>
+    <ol>
+        <li>The action method is prefixed by an <b>[HttpPost]</b> attribute.</li>
+        <li>The parameter list includes a string <b>oper</b>. The primary key, EmployeeID, is here interpreted
+            as a nullable int, but it can optionally be interpreted as a string. Additional parameters
+            correspond to all of the other editable columns; the non-editable columns are not represented.</li>
+        <li>The oper parameter may have the values "add", "edit", or "del".</li>
+        <li>The primary key will be null on an "add" operation.</li>
+        <li>It doesn't seem to make too much difference what you return. The Content() method simply wraps the 
+            true/false strings in a ContentResult.
+        </li>
+    </ol>
+    <img class="bordered-outline" src="~/Images/EditEmployeeData.png" />
+    <p>
+        <br />
+    </p>
+</div>
+

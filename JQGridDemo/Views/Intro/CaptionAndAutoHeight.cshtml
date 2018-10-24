@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = "Caption and Auto Height";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Caption and Auto Height 
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+</div>
+
+<script>
+    var dataArray = [
+        { FirstName: "Nancy", Title: "Sales Representative" },
+        { FirstName: "Andrew", Title: "Vice President, Sales" }
+    ];
+
+    $("#JQGrid1").jqGrid({
+        datatype: "local",
+        data: dataArray,
+        colModel: [
+        { name: "FirstName", label: "Name" },
+        { name: "Title", label: "Title" }
+        ],
+        height: "auto",
+        caption: "Employees"
+    });
+</script>
+
+
+<div style="clear: both"></div>
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        By adding two more key-value pairs to the associative array, we add a caption
+        to the grid, and adjust the height of the grid to automatically adjust to the
+        amount of data. Note that the empty space reserved for the scrollbar has
+        disappeared. This is because no matter how many rows this grid may have, 
+        it will stretch to fit the data, so a scrollbar is superfluous.
+    </p>
+    <img class="bordered-outline" src="~/Images/CaptionsAndAutoHeight.png" />
+    <p>
+        <br />
+    </p>
+</div>

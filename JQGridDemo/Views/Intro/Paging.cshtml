@@ -1,0 +1,81 @@
+﻿@{
+    ViewBag.Title = "Paging";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Paging
+</div>
+<hr class="page-title-separator" />
+
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+
+<script>
+    var dataArray = {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "total": 13,
+        "result": [
+            { FirstName: "Nancy", Title: "Sales Representative" },
+            { FirstName: "Andrew", Title: "Vice President, Sales" },
+            { FirstName: "Janet", Title: "Sales Representative" },
+            { FirstName: "Margaret", Title: "Sales Representative" },
+            { FirstName: "Steven", Title: "Sales Manager" },
+            { FirstName: "Michael", Title: "Sales Representative" },
+            { FirstName: "Robert", Title: "Sales Representative" },
+            { FirstName: "Laura", Title: "Inside Sales Coordinator" },
+            { FirstName: "Anne", Title: "Sales Representative" },
+            { FirstName: "Tom", Title: "Sales Representative" },
+            { FirstName: "Gerald", Title: "Sales Representative" },
+            { FirstName: "Sharon", Title: "Office Manager" },
+            { FirstName: "Gregory", Title: "Network Engineer" }
+        ]
+    };
+
+    $("#JQGrid1").jqGrid({
+        datatype: "local",
+        data: dataArray.result,  
+        colModel: [
+            { name: "FirstName", label: "Name" },
+            { name: "Title", label: "Title" }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    });
+</script>
+
+<div style="clear: both"></div>
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        To add paging, we start by adding a &lt;div> element below the &lt;table> element as a 
+        placeholder for the navigation layer:
+    </p>
+    <img class="bordered-outline" src="~/Images/Paging-html.png" />
+    <p>
+        We replace the simple dataArray in our earlier examples with an associative array
+        in Json format. The Json identifies the jsonrpc version, gives the total number of rows,
+        and sets the data as the value of the <b>result</b> key.
+    </p>
+    <p>
+        The expanded associative array fed to the jqGrid() method identifies the &lt;div> element
+        used for the <b>pager</b> and indicates the number of rows per page (<b>rowNum</b>). Note 
+        that the value of the <b>data</b> key is no longer <b>dataArray</b> but <b>dataArray.result</b> :
+    </p>
+    <img class="bordered-outline" src="~/Images/Paging.png" />
+    <p>
+        The resulting grid displays all four standard layers described in the jqGrid documentation. Beginning from
+        the top, these are the caption, the header, the body, and the navigation layers.
+    </p>
+    <p>
+        <br />
+    </p>
+</div>

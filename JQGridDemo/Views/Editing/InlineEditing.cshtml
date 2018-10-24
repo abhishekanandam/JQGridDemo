@@ -1,0 +1,113 @@
+﻿@{
+    ViewBag.Title = "Inline Editing";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Inline Editing
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Editing/OnEmployeeDataRequested",
+        editurl: '/Editing/EditEmployeeData',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            {
+                editable: true, width: 60, name: "LastName", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 60, name: "FirstName", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 110, name: "Title", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "cn", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 55, name: "BirthDate", /* hidden: true, */ search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true }
+            },
+            {
+                editable: true, width: 55, name: "HireDate", search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true }
+            },
+            { editable: true, width: 100, name: "Address", search: false, editrules: { required: true } },
+            { editable: true, width: 40, name: "City", search: false, editrules: { required: true } },
+            { editable: true, width: 40, name: "Region", search: false },
+            { editable: true, width: 60, name: "PostalCode", search: false, editrules: { required: true } },
+            {
+                editable: true, width: 40, name: "Country", search: false, edittype: "select",
+                editoptions: { dataUrl: "/Editing/CountriesSelectList" }
+            },
+            {
+                editable: true, width: 70, name: "HomePhone", search: false,
+                editrules: { required: true, custom: true, custom_func: JQGridDemo.usaUkPhoneNumberCheck }
+            },
+            { editable: true, width: 30, name: "Extension", search: false },
+            {
+                editable: true, width: 190, name: "PhotoPath", formatter: "link", search: false,
+                editrules: { custom: true, custom_func: JQGridDemo.allowedImageLinkCheck }
+            }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager",
+        addParams: { useFormatter: false },
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+    $("#JQGrid1").jqGrid('navGrid', '#JQGrid1_pager', {
+        edit: false, add: false, save: false, cancel: false,
+        search: true, refresh: true, del: true, view: true
+    });
+    $("#JQGrid1").jqGrid('inlineNav', '#JQGrid1_pager', {
+        edit: true, add: true, save: true, cancel: true
+    });
+
+
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Up until now, all of our edits have been via Form editing, which involves creating a form, on the fly, to 
+        enter or edit grid data. Inline editing allows one to update the cell content in particular row,
+        while Cell editing enables editing individual cells.
+    </p>
+        To enable Inline editing, one explicitly turns off the <b>edit</b>, <b>add</b>, <b>save</b>, and <b>cancel</b> 
+        buttons in the <b>navGrid</b> option, while explicitly turning on the same buttons in the <b>inlineNav</b>
+        option:
+    <p>
+                <img class="bordered-outline" src="~/Images/InlineEditing.png" />
+    </p>
+    <p>
+        Unlike the case with Form editing, the <b>add</b> and <b>edit</b> columns in Inline editing are necessarily
+        the same. One gets into logic issues if one creates a hidden required field which will appear only during 
+        an <b>add</b> operation:
+    </p>
+        <img class="bordered-outline" src="~/Images/InlineEditing_1.png" />
+    <p>
+        <br />
+    </p>
+</div>
+

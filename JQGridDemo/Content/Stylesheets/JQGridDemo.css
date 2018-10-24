@@ -1,0 +1,114 @@
+﻿/*SiteMasterPageLayout*/
+#headerTitle {
+    text-align:center;
+    background-color:#003366;
+    height:50px;
+    line-height:50px;
+	margin-bottom: 1px;
+}
+#headerTitle h2 {
+    margin-bottom:0; 
+    color: #FFFFFF; 
+    font-family: Calibri, Arial;
+}
+#menuwrapper {
+    background-color:#003366; 
+    float:left; 
+    font-family: Calibri, Arial; 
+    color: #FFFFFF; 
+    text-align:left;
+    font-size:1em;
+}
+#footer {
+    background-color:#003366; 
+    clear:both;
+    text-align:center; 
+    font-family: Calibri, Arial; 
+    color: #FFFFFF;
+    font-size:1em;
+}
+
+#footer a:link {
+	color:#AAAAFF;
+} 
+
+body {
+    font-family:Calibri, Arial;
+    font-size:92%;
+}
+
+tr {
+    font-family:Calibri, Arial;
+    font-size:1em;
+}
+
+td {
+    font-family:Calibri, Arial;
+    font-size:1em;
+}
+
+select {
+    font-family:Calibri, Arial;
+    font-size:1em;
+}
+option {
+    background-color:lightyellow;
+}
+
+.page-title {
+	float:left;
+	font-size:1.4em;
+	font-weight:bold;
+	height:40px;
+	line-height:40px;
+}
+.page-title-separator {
+	clear:both;
+	width:1020px;
+    border: none;
+    height: 1px;
+    background-color:green;
+}
+.page-title-offset {
+	float:left;
+	width:250px;
+	height:1px
+}
+.page-content-offset {
+	float:left;
+	width:40px;
+	height:1px
+}
+.page-content {
+	width:980px;
+	float:left;
+}
+.page-text-block {
+    width:750px;
+	float:left;
+}
+
+.bordered-outline {
+	border:solid;
+	border-width:1px;
+	border-color:blue
+}
+
+.clear-both {
+    clear:both
+}
+
+.small-vertical-spacing {
+    height: 10px;
+}
+
+.warning {
+	color: #DD0000;
+    font-style:italic;
+    font-weight:bold;
+}
+
+.exportLink
+{
+    float:right;
+}

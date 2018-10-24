@@ -1,0 +1,277 @@
+﻿@{
+    ViewBag.Title = "Validation";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Server Side Validation
+</div>
+<hr class="page-title-separator" />
+<div class="page-content-offset"></div>
+<div>
+    <a href="~/ServerValidation/ValidationAndExceptions?act=bad">Click on this link to do something bad</a> 
+</div>
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/ServerValidation/OnEmployeeDataRequested",
+        editurl: '/ServerValidation/EditEmployeeData',
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title",
+                   "Birth Date", "Hire Date", "Address", "City", "Region",
+                   "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true, search: false },
+            {
+                editable: true, width: 60, name: "LastName", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 60, name: "FirstName", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 120, name: "Title", search: true, stype: "text",
+                searchoptions: { "sopt": ["bw", "cn", "eq"] }, editrules: { required: true }
+            },
+            {
+                editable: true, width: 0, name: "BirthDate", hidden: true, search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true }
+            },
+            {
+                editable: true, width: 60, name: "HireDate", search: false, formatter: "date",
+                formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }, editrules: { date: true }
+            },
+            { editable: true, width: 110, name: "Address", search: false, editrules: { required: true } },
+            { editable: true, width: 50, name: "City", search: false, editrules: { required: true } },
+            { editable: true, width: 40, name: "Region", search: false },
+            { editable: true, width: 60, name: "PostalCode", search: false, editrules: { required: true } },
+            {
+                editable: true, width: 50, name: "Country", search: false, edittype: "select",
+                editoptions: { dataUrl: "/Editing/CountriesSelectList" }
+            },
+            {
+                editable: true, width: 70, name: "HomePhone", search: false,
+                editrules: { required: true, custom: true, custom_func: JQGridDemo.usaUkPhoneNumberCheck }
+            },
+            { editable: true, width: 30, name: "Extension", search: false },
+            {
+                editable: true, width: 200, name: "PhotoPath", formatter: "link", search: false,
+                editrules: { custom: true, custom_func: JQGridDemo.allowedImageLinkCheck }
+            }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    }).jqGrid('navGrid', '#JQGrid1_pager', { edit: true, add: true, del: true, search: true, view: false, refresh: true },
+    { // edit options 
+        closeAfterEdit: true,
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    },
+    { // add options 
+        beforeShowForm: function (form) {
+            $("#tr_BirthDate", form).show();
+        },
+        closeAfterAdd: true,
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    },
+    { // del options 
+        errorTextFormat: function (data) {
+            JQGridDemo.displayCustomErrorMessage();
+        }
+    });
+
+</script>
+
+<div style="clear: both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        The general recommendation, for security reasons, is to perform both client-side and server-side
+        validation. While it is somewhat more difficult for a hacker to bypass client-side validation with
+        jqGrid than with, say, a webforms GridView control, inasmuch as turning off Javascript will totally
+        disable jqGrid, to an experienced hacker this is but a minor detail. 
+    </p>
+    <p>
+        On the server side, the simplest action to perform when an error is encountered in validation is to throw
+        an exception. However, this leads to several ancillary issues:
+    </p>
+    <ol>
+        <li>How is the user to be informed that a validation error has occurred, and how much information should be
+        revealed to the user?</li>
+        <li>Unexpected exceptions arising during processing generally need to be logged for tracking purposes. However,
+        there is usually no need to log exceptions thrown as a result of validation errors.</li>  
+    </ol>
+    <p>
+        An unhandled exception occurring on a development workstation generally results in a special view being sent to a
+        user, a "yellow screen of death" (HTTP 500 - internal server error) with stack trace information that should never 
+        be revealed to an end user. On a remote machine, the default action in response to an unhandled exception
+        is to the user a sanitized version of the yellow screen of death that supplies little information 
+        other than the fact that a runtime error has occurred.     
+    </p>
+    <p>
+        In response to a validation exception, users should not be redirected to another screen, but instead should
+        receive a succinct explanation of how to correct their input. In response to a general exception, users may
+        or may not be directed to another screen, where in addition to a succinct explanation of what went wrong, 
+        they should be given sufficient information, such as a log reference number and a timestamp, which will aid 
+        IT Support Members in diagnosing the issue. 
+    </p>
+    <div>
+        <h3><em>Exceptions on Submitted Edits</em></h3>      
+    </div>
+    <p>
+        The easiest way to explain the code that I have used to implement server-side validation is to trace 
+        through an invalid edit.
+    </p>
+    <p>
+        We begin with the following innocuous edit. The user has supplied the extension "x3333", not knowing
+        that the validation rules require that the extension be all numeric:
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_0.png" />
+    <p>
+        The posted message is handled by the EditEmployeeData() action method. Note that the method is decorated
+        with a <b>[JQGridPostExceptionHandler]</b> attribute. Within the method, I have written a Regex check for 
+        the extension format:
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_2.png" />
+    <p>
+        Since the Regex does not match, I throw a ValidationException:
+    </p>
+     <img class="bordered-outline" src="~/Images/Exception_1.png" />
+    <p>
+        The exception is handled by the OnException() method of the filter attribute.
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_3.png" />
+    <p>
+        Since the exception type is that of a ValidationException, nothing will be logged.
+    </p>
+    <p> 
+        <span class="warning"><b>Note on the use of session variables.</b></span> 
+        A session remains active as long as the browser continues to make requests 
+        with the same SessionID value within a specified 
+        timeout. <a href="http://msdn.microsoft.com/en-us/library/ms178581%28v=vs.90%29.aspx">
+        http://msdn.microsoft.com/en-us/library/ms178581%28v=vs.90%29.aspx</a>
+        This appears to be true regardless whether a controller exits normally or via an exception. 
+    </p>
+    <p>     
+        ASP.NET generates a random SessionID, which is stored in a non-expiring session cookie on
+        the browser. A new SessionID is created for each page request until the first time that the
+        session object is accessed, after which the SessionID becomes static. 
+        <a href="http://msdn.microsoft.com/en-us/library/system.web.sessionstate.httpsessionstate.sessionid(v=vs.110).aspx">
+            http://msdn.microsoft.com/en-us/library/system.web.sessionstate.httpsessionstate.sessionid(v=vs.110).aspx 
+        </a>&nbsp;
+    </p>
+    <p>
+        <span class="warning">
+            In the code shown above,
+            if the assignment to <b>Session["CustomErrorMessage"]</b> represents the first time that the
+            session object has ever been accessed, the throwing of the exception means that the browser
+            will not know what SessionID accesses the session variable.
+        </span> 
+           In our demo code, the symptom will be a "Failed to retrieve states" error. To avoid this issue, it is 
+           necessary, early in the session life cycle, to create a SessionID which is static for the 
+           entire session. We do this by 
+           implementing the Session_Start() method in Global.asax and storing data in the session object,
+           as shown below:
+    </p>
+        <img class="bordered-outline" src="~/Images/Exception_8.png" />
+    <p>
+        The unhandled exception results in transmission of a sanitized yellow
+        screen of death (HTTP/1.1 500 Internal Server Error) to the remote browser. Within the browser, 
+        the error message is 
+        handled by the following code in the jqGrid definition, which specifies a custom error handler. 
+        The function (data) parameter receives the sanitized yellow screen of death HTML, which has nothing of
+        interest to us and is ignored:
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_5.png" />
+    <p>
+        The custom error handler issues an Ajax call to the controller:
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_6.png" />
+    <p>
+        The controller action <b>GetCustomErrorMessage()</b> fetches the custom error message and returns
+        its content to the browser:
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_11.png" />
+    <p>
+        The browser then calls an alert() to show the error message to the user:
+    </p>
+        <img class="bordered-outline" src="~/Images/Exception_10.png" />
+    <div>
+    <p>
+        In a production application, one would probably not want to use a simplistic alert() dialog to inform the 
+        end-user of a validation error, but would use Javascript to control the visibility and content of hidden 
+        message placeholders on the screen.  
+    </p>
+        <h3><em>General Controller Exceptions</em></h3>     
+    </div>
+    <p>
+        How other controller exceptions are handled is illustrated by clicking on the bad link at the top of this page,
+        which sends "GET&nbsp;/ServerValidation/ValidationAndExceptions?act=bad&nbsp;HTTP/1.1" to the server. The server
+        receives the bad query string and throws an exception: 
+    </p>
+        <img class="bordered-outline" src="~/Images/Exception_9.png" />
+    <p>
+    <p>
+        In the GlobalFilterCollection, I had replaced the default <b>HandleErrorAttribute</b> with a customized
+        ControllerExceptionHandlerAttribute: 
+    </p>
+    <img class="bordered-outline" src="~/Images/Exception_13.png" />
+    <p>
+        The thrown exception is handled by the OnException() method of the filter attribute.
+    </p>
+        <img class="bordered-outline" src="~/Images/Exception_4.png" />
+    <p>
+        The filter attribute logs the exception and redirects to the Error view:
+    </p>
+        <img class="bordered-outline" src="~/Images/ExceptBad.png" style="width:700px" />
+    <p>
+        <b class="warning">Please note that in a development environment, the redirect to the Error view does not necessarily work.</b>
+        While preparing this article, I spent several hours trying to understand why a base class Exception thrown from
+        the ValidationAndExceptions action redirected to the Error view, but a connection error thrown from
+        OnEmployeeDataRequested refused to redirect. This turns out to be a glitch in the development web server.
+        <a href="http://stackoverflow.com/questions/13845318/asp-net-mvc-4-exception-handling-not-working">
+            http://stackoverflow.com/questions/13845318/asp-net-mvc-4-exception-handling-not-working
+        </a>
+    </p>
+    <p class="warning">
+        What happens is that when jqGrid makes a request to the url for grid data with which to render the grid, 
+        it expects the server to return a json string with the grid row information. If an exception is thrown 
+        from a development server, and the page does not redirect, jqGrid will receive, not the expected json string, 
+        but the HTML markup of the 
+        Error redirect screen. Naturally, the jqGrid code hasn't the foggiest idea what to do with this HTML markup.
+    </p>
+    <p>
+        A workaround is available which will be discussed in the next lesson.
+    </p>
+    <p>
+        The subject of exception handling in MVC is a large one. Since this is an article about jqGrid and
+        not one about MVC exception handling, I would highly recommend that you read articles on this 
+        subject by authors whose knowledge of this subject considerably exceed my own: <br />
+        <a href="http://www.prideparrot.com/blog/archive/2012/5/exception_handling_in_asp_net_mvc">
+            http://www.prideparrot.com/blog/archive/2012/5/exception_handling_in_asp_net_mvc</a><br />
+        <a href="http://www.codeproject.com/Articles/731913/Exception-Handling-in-MVC">
+            http://www.codeproject.com/Articles/731913/Exception-Handling-in-MVC
+        </a>
+    </p>
+    <p>
+        <br/>
+    </p>
+</div>
+

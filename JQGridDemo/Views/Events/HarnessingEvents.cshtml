@@ -1,0 +1,184 @@
+﻿@{
+    ViewBag.Title = "Events";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Harnessing Events
+</div>
+<hr class="page-title-separator" />
+<div class="clear-both small-vertical-spacing"></div>
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <select id="ddlCountry">
+        <option value="0">Choose Country</option>
+        <option value="USA">USA</option>
+        <option value="UK">UK</option>
+        <option value="Sweden">Sweden</option>
+    </select>
+</div>
+<div class="clear-both small-vertical-spacing"></div>
+<div class="page-content-offset"></div>
+<div id="divJQGrid1" class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+<div class="clear-both small-vertical-spacing"></div>
+<div class="page-content-offset"></div>
+<div id="divJQGrid2" class="page-content">
+    <table id="JQGrid2"></table>
+    <div id="JQGrid2_pager"></div>
+    <div style="text-align:center"><b>(NorthWind has no Swedish employees. See what happens when you select Sweden.)</b></div>
+</div>
+
+    <script>
+        $("#ddlCountry").change(function () {
+            var selectedCountry = $(this).val();
+            $.ajax({
+                cache: false,
+                type: "GET",
+                url: "@(Url.Action("OnSelectedCountryChanged", "Events"))",
+                dataType: 'json',
+                data: { "country": selectedCountry },
+                success: function (data) {
+                    $("#JQGrid1").setGridParam({ page: 1 }).trigger("reloadGrid");
+                    $("#JQGrid2").setGridParam({ page: 1 }).trigger("reloadGrid");
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                    JQGridDemo.displayCustomErrorMessage();
+                }
+            })
+        });
+
+        $("#JQGrid1").jqGrid({
+            url: "/Events/OnEmployeeDataRequested",
+            mtype: "GET",
+            datatype: "json",
+            page: 1,
+            jsonReader: { id: "EmployeeID" },
+            prmNames: { id: "EmployeeID" },
+            colNames: ["EmployeeID", "Last Name", "First Name", "Title", "Birth Date", "Hire Date",
+                "Address", "City", "Region", "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+            colModel: [
+                { key: true, width: 50, name: "EmployeeID", hidden: true },
+                { width: 60, name: "LastName" },
+                { width: 60, name: "FirstName" },
+                { width: 120, name: "Title" },
+                { width: 60, name: "BirthDate", hidden: true },
+                {
+                    width: 60, name: "HireDate",
+                    formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+                },
+                { width: 110, name: "Address" },
+                { width: 50, name: "City" },
+                { width: 40, name: "Region" },
+                { width: 60, name: "PostalCode" },
+                { width: 50, name: "Country" },
+                { width: 70, name: "HomePhone" },
+                { width: 30, name: "Extension" },
+                { width: 200, name: "PhotoPath", formatter: "link" }
+            ],
+            height: "auto",
+            caption: "Employees Grid 1",
+            rowNum: 5,
+            pager: "#JQGrid1_pager",
+            loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler,
+        });
+
+        $("#JQGrid2").jqGrid({
+            url: "/Events/OnEmployeeDataRequested",
+            mtype: "GET",
+            datatype: "json",
+            page: 1,
+            jsonReader: { id: "EmployeeID" },
+            prmNames: { id: "EmployeeID" },
+            colNames: ["EmployeeID", "Last Name", "First Name", "Title", "Birth Date", "Hire Date",
+                "Address", "City", "Region", "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+            colModel: [
+                { key: true, width: 50, name: "EmployeeID", hidden: true },
+                { width: 60, name: "LastName" },
+                { width: 60, name: "FirstName" },
+                { width: 120, name: "Title" },
+                { width: 60, name: "BirthDate", hidden: true },
+                {
+                    width: 60, name: "HireDate",
+                    formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" }
+                },
+                { width: 110, name: "Address" },
+                { width: 50, name: "City" },
+                { width: 40, name: "Region" },
+                { width: 60, name: "PostalCode" },
+                { width: 50, name: "Country" },
+                { width: 70, name: "HomePhone" },
+                { width: 30, name: "Extension" },
+                { width: 200, name: "PhotoPath", formatter: "link" }
+            ],
+            gridComplete: function () {
+                var JQGrid2count = jQuery("#JQGrid2").jqGrid('getGridParam', 'records');
+                if (JQGrid2count > 0) $("#divJQGrid2").show();
+                else $("#divJQGrid2").hide();
+            },
+            height: "auto",
+            caption: "Employees Grid 2",
+            rowNum: 5,
+            pager: "#JQGrid2_pager",
+            loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler,
+        });
+    </script>
+
+    <div style="clear:both" />
+    <div class="page-content-offset"></div>
+    <div class="page-text-block">
+        <p>
+            Almost any action that jqGrid performs or is sensitive to has an attached event, which you can use 
+            as a trigger to perform your own custom actions. Dozens of events are described in the following documentation: 
+            <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:events">
+            http://www.trirand.com/jqgridwiki/doku.php?id=wiki:events</a>
+            You can monitor row selection, row double clicks, resizing, showing, hiding, editing, and more. At appropriate
+            points in grid rendering, you can use events to call your own custom Javascript to change the grid's 
+            appearance. 
+        </p>
+        <p>
+            I illustrate here two simple uses of events.
+        </p>
+        <h3><em>Controlling Grid Visibility</em></h3>     
+        <p> If the result of a query is an empty resultset, do we want 
+            the caption, header and navigation layers of the grid to still be visible on the page, like the grin 
+            of a Cheshire Cat, or do we want the grid to disappear entirely? I've had some users desire the one behavior,
+            and some desire the other. In the code below, I wait until the grid is complete, then get the number of 
+            rows retrieved in the query to the server. If the total number of rows is zero, I hide() the 
+            &lt;div>&lt;/div> that encloses the table.  
+        </p>
+        <img class="bordered-outline" src="~/Images/HarnessingEvents.png" />
+        <p>
+            The code to handle dropdown changes, by the way, is very straightforward, except for one caveat. Upon a
+            dropdown change, I use an ajax call to send the current dropdown selection back to the server to save
+            in a Session variable. Upon a successful response, I reset the grid to page 1 and trigger the grid to be
+            reloaded. <span class="warning">Resetting the grid to page 1 is very important, since if the user happens
+            to be on, say, page 10 of a grid and the grid suddenly shrinks to a single page of data, the user will 
+            be "stuck" on a nonexistent page until he refreshes the grid. The user will be very unhappy with
+            your sloppy coding.</span>  
+        </p>
+        <img class="bordered-outline" src="~/Images/HarnessingEvents_2.png" />
+        <h3><em>Displaying Grid Load Errors</em></h3>     
+        <p>
+            As explained in the last section, if an exception occurs in response to jqGrid's ajax request for 
+            grid data, a development server will return, not the expected json string, but HTML markup, which leaves
+            the jqGrid code totally baffled. The jqGrid code will raise a <b>loadError</b> event, which we can
+            exploit to provide the developer a sensible error message. We provide a handler for the event:
+        </p>
+        <img class="bordered-outline" src="~/Images/HarnessingEvents_4.png" />
+        <p>
+            The handler code extracts the response text from the ajax <b>XMLHttpRequest</b> object, and replaces 
+            the inner html of the current document body with the response text:
+        </p>
+        <img class="bordered-outline" src="~/Images/HarnessingEvents_5.png" />
+        <p>
+            The resulting screen shows the error message, which in this case is "The underlying provider failed on Open." 
+        </p>
+        <img class="bordered-outline" src="~/Images/ExceptConn.png" style="width:750px" />
+        <p>
+            <br />
+        </p>
+    </div>
+

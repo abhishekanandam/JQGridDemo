@@ -1,0 +1,80 @@
+﻿@{
+    ViewBag.Title = "Exporting";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Exporting
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+    <div><a href="/OtherFeatures/ExportEmployeesToExcel">Export</a></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Employee/OnEmployeeDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title", "Birth Date", "Hire Date",
+            "Address", "City", "Region", "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true },
+            { width: 60,  name: "LastName" },
+            { width: 60,  name: "FirstName" },
+            { width: 120, name: "Title" },
+            { width: 60,  name: "BirthDate", hidden: true },
+            { width: 60,  name: "HireDate",
+              formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" } },
+            { width: 110, name: "Address" },
+            { width: 50,  name: "City" },
+            { width: 40,  name: "Region" },
+            { width: 60,  name: "PostalCode" },
+            { width: 50,  name: "Country" },
+            { width: 70,  name: "HomePhone" },
+            { width: 30,  name: "Extension" },
+            { width: 200, name: "PhotoPath", formatter: "link" }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager",
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Exporting your grids to an Excel-compatible file is extremely simple. If you have 
+        done all the work to display the grid, you have done almost all the work necessary to export to an
+        Excel-compatible format. 
+    </p>
+    <p>
+        As illustrated below, the code for the export method looks almost exactly the same as the code for the
+        action method that returns a JsonResult for jqGrid rendering. The only difference is that instead of
+        performing a DataBind() to the JQGrid, one calls the ExportToExcel() method. No other work is needed.
+        One does not have to worry of the details of inserting the exported results into the response output 
+        stream, nor does one need to concern oneself about specifying the correct content type, content 
+        dispositions or anything else except giving the file an appropriate name. 
+    </p>
+    <img class="bordered-outline" src="~/Images/Exporting.png" />
+    <p>
+        Since the file is not actually an xls file, but rather consists of html markup, one gets a warning 
+        message when one opens the file with Excel.
+    </p>
+        <img class="bordered-outline" src="~/Images/Exporting_1.png" style="width:750px" />
+    <p>
+        <br />
+    </p>
+</div>
+

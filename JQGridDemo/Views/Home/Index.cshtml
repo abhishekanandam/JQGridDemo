@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Home";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Introduction 
+</div>
+<hr class="page-title-separator" />
+
+<div style="clear: both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        jqGrid is a <a href="http://www.trirand.com/blog/?page_id=154">freely licensed (both GPL and MIT)</a>, 
+        Ajax-enabled JavaScript plugin created by Tony Tomov of <a href="http://www.trirand.com/">Trirand</a> 
+        that provides web developers
+        advanced means for displaying and manipulating tabular data. There are many good features about
+        this plugin:
+    </p>
+    <ul>
+        <li>Features such as sorting, both form-based and inline 
+        editing, search, paging and so forth are built into the framework.</li>
+        <li><a href="http://www.trirand.com/jqgridwiki/doku.php?id=start">Extensive documentation</a>
+            is available online including a 
+            <a href="http://www.trirand.com/blog/jqgrid/jqgrid.html">large number of active working demos with source code</a></li>
+        <li>Community feedback assistance (which often includes contributions by Tony Tomov and other members of the
+            Trirand team) is available on the <a href="http://www.trirand.com/blog/?page_id=393">Trirand web site</a>
+            and on user forums such as <a href="http://stackoverflow.com/">Stack Overflow</a>
+            and <a href="http://www.codeproject.com/">Code Project</a>.</li>
+        <li>A tutorial textbook is available: Instant jqGrid, by Gabriel Manricks (Packt Publishing, 2013).</li>
+        <li>Trirand supplies a .NET assembly (Trirand.Web.Mvc.dll) that greatly simplifies the job of
+        interfacing between server-side .NET code and client-side Javascript.</li>
+    </ul>
+    <p>
+        The grid also has a number of negatives.
+    </p>
+    <ul>
+        <li>The Javascript clearly was written by a variety of different people who used different 
+         coding conventions and who did not always communicate well with each other or with the original author.</li>
+        <li>Client-side Javascript and the server-side assembly imperfectly duplicate 
+        a great deal of functionality, leaving the user often baffled as how best to configure a feature.</li>
+        <li>The source Javascript is often cryptic.</li>
+        <li>Most of the online documentation is for the PHP developer, which leaves .NET developers 
+            such as myself in the dark.</li>
+        <li>Most of the online .NET documentation is for WebForms.</li>
+        <li>Most of the online MVC documentation is for MVC 3.</li>
+        <li>Tutorials for the MVC 4 developer have mostly been lacking.</li>
+    </ul>
+    <p>
+        I am absolutely <b>not</b> a jqGrid expert; as of late September, 2014, when I wrote the first 
+        draft of this article, I had only been using the tool for about three months. Ten months passed 
+        before I was once again called to use jqGrid. The results of my two weeks of struggle to apply 
+        jqGrid in this new situation are documented in a new section that I have added to this article 
+        on Server-Side Paging. 
+    </p>
+    <p>
+        Oddly enough, I believe that the lack of experience on my part provides
+        me with a useful and highly distinct perspective on jqGrid. In the course of my learning how to use jqGrid, 
+        I have committed many newbie errors and have gotten stuck on numerous "gotchas" which blocked my
+        progress for hours while I frantically searched online for a solution. <span class="warning">
+        In the following, I have highlighted in red italic text descriptions of several of the worst pits into which 
+        I've managed to fall.</span> It is my hope that by sharing my experiences, I can prevent others from
+        committing the same mistakes.            
+    </p>
+    <p>
+        This program and its source code, along with any associated article text, is licensed under 
+        <a href="http://www.codeproject.com/info/cpol10.aspx">the code project open license (cpol)</a>
+    </p>
+    <p>
+        <br />
+    </p>
+</div>
+

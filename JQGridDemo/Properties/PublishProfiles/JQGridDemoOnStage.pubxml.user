@@ -1,0 +1,472 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\JQGridDemoWebsite</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/EntityFramework.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/EntityFramework.SqlServer.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/JQGridDemo.dll">
+      <publishTime>09/28/2014 06:54:15</publishTime>
+    </File>
+    <File Include="bin/Microsoft.Web.Infrastructure.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/Newtonsoft.Json.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/System.Net.Http.Formatting.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Helpers.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Http.WebHost.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Mvc.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>09/25/2014 11:02:29</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Deployment.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/System.Web.WebPages.Razor.dll">
+      <publishTime>09/25/2014 11:02:30</publishTime>
+    </File>
+    <File Include="bin/Trirand.Web.Mvc.dll">
+      <publishTime>07/29/2014 13:18:04</publishTime>
+    </File>
+    <File Include="Content/jquery/i18n/grid.locale-en.js">
+      <publishTime>07/15/2014 07:45:58</publishTime>
+    </File>
+    <File Include="Content/jquery/jquery-2.1.1.min.js">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/jquery/jquery-2.1.1.min.map">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/jquery/jquery-ui-1.10.4.min.js">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/jquery/jquery.jqGrid.min.js">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/jquery/jquery.validate.min.js">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/Scripts/JQGridDemo.js">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/Stylesheets/css_flyoutverticalmenu.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/Stylesheets/JQGridDemo.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/Stylesheets/jquery-ui.theme.min.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/Stylesheets/ui.jqgrid.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/animated-overlay.gif">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_diagonals-thick_90_eeeeee_40x40.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_flat_0_aaaaaa_40x100.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_flat_15_cd0a0a_40x100.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_flat_75_ffffff_40x100.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glass_100_e4f1fb_1x400.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glass_50_3baae3_1x400.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glass_80_d7ebf9_1x400.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glass_95_fef1ec_1x400.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glow-ball_0_003366_600x600.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glow-ball_0_336699_600x600.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glow-ball_0_eebb22_600x600.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_glow-ball_75_ffcc33_600x600.png">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_highlight-hard_100_f2f5f7_1x100.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_highlight-hard_70_000000_1x100.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_highlight-soft_100_deedf7_1x100.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-bg_highlight-soft_25_ffef8f_1x100.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_111111_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_222222_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_2694e8_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_2e83ff_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_3d80b3_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_454545_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_72a7cf_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_888888_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_cd0a0a_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/images/ui-icons_ffffff_256x240.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/jquery-ui.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/jquery-ui.min.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/cupertino/theme.css">
+      <publishTime>09/25/2014 11:00:10</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/animated-overlay.gif">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_diagonals-thick_18_b81900_40x40.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_diagonals-thick_20_666666_40x40.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_flat_10_000000_40x100.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_glass_100_f6f6f6_1x400.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_glass_100_fdf5ce_1x400.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_glass_65_ffffff_1x400.png">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_gloss-wave_35_f6a828_500x100.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_highlight-soft_100_eeeeee_1x100.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-bg_highlight-soft_75_ffe45c_1x100.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-icons_222222_256x240.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-icons_228ef1_256x240.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-icons_ef8c08_256x240.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-icons_ffd27a_256x240.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/images/ui-icons_ffffff_256x240.png">
+      <publishTime>09/25/2014 11:00:12</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/jquery-ui.css">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/jquery-ui.min.css">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Content/themes/ui-lightness/theme.css">
+      <publishTime>09/25/2014 11:00:11</publishTime>
+    </File>
+    <File Include="Global.asax">
+      <publishTime>09/25/2014 11:00:09</publishTime>
+    </File>
+    <File Include="Images/AddEditDelete.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Caching.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Caching_2.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Caching_3.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/CaptionsAndAutoHeight.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/ClientSideSearchSetup.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/CustomValidation.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EditEmployeeData.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Employee-controller.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Employee.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EmployeeJQGridModel.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EvolvingTool.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EvolvingTool_1.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EvolvingTool_2.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/EvolvingTool_3.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/ExceptBad.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/ExceptConn.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_0.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_1.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_10.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_11.png">
+      <publishTime>09/28/2014 01:42:29</publishTime>
+    </File>
+    <File Include="Images/Exception_12.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_13.png">
+      <publishTime>09/25/2014 11:00:13</publishTime>
+    </File>
+    <File Include="Images/Exception_2.png">
+      <publishTime>09/25/2014 11:13:46</publishTime>
+    </File>
+    <File Include="Images/Exception_3.png">
+      <publishTime>09/28/2014 01:52:02</publishTime>
+    </File>
+    <File Include="Images/Exception_4.png">
+      <publishTime>09/28/2014 01:44:54</publishTime>
+    </File>
+    <File Include="Images/Exception_5.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Exception_6.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Exception_7.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Exception_8.png">
+      <publishTime>09/28/2014 01:55:06</publishTime>
+    </File>
+    <File Include="Images/Exception_9.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Exporting.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Exporting_1.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/FirstGrid-html.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/FirstGrid.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Formatting.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/HarnessingEvents.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/HarnessingEvents_2.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/HarnessingEvents_3.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/HarnessingEvents_4.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/HarnessingEvents_5.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/InlineEditing.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/InlineEditing_1.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/MasterDetail.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Paging-html.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Paging.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Searching.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/SetupEmployee.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Validation.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Validation_1.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Validation_2.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Images/Validation_3.png">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Lib/README.TXT">
+      <publishTime>09/25/2014 11:00:14</publishTime>
+    </File>
+    <File Include="Lib/Trirand.Web.Mvc.dll">
+      <publishTime>07/29/2014 13:18:04</publishTime>
+    </File>
+    <File Include="Models/Northwind.edmx.diagram">
+      <publishTime>09/25/2014 11:00:15</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>09/25/2014 11:00:09</publishTime>
+    </File>
+    <File Include="Views/Caching/MemoryCaching.cshtml">
+      <publishTime>09/25/2014 15:31:54</publishTime>
+    </File>
+    <File Include="Views/Editing/AddEditDelete.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Editing/InlineEditing.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Editing/Validation.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Employee/Employees.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Events/HarnessingEvents.cshtml">
+      <publishTime>09/27/2014 19:16:25</publishTime>
+    </File>
+    <File Include="Views/Home/Index.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Intro/CaptionAndAutoHeight.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Intro/FirstGrid.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Intro/Formatting.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Intro/InitialSetup.cshtml">
+      <publishTime>09/28/2014 05:47:57</publishTime>
+    </File>
+    <File Include="Views/Intro/Paging.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Intro/Searching.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/MasterDetail/MasterDetailGrids.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/MovingTarget/AnEvolvingTool.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/OtherFeatures/Exporting.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Searching/SearchingRevisited.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/ServerValidation/ValidationAndExceptions.cshtml">
+      <publishTime>09/28/2014 02:19:38</publishTime>
+    </File>
+    <File Include="Views/Shared/Error.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Shared/_SiteMasterPageLayout.cshtml">
+      <publishTime>09/25/2014 11:00:16</publishTime>
+    </File>
+    <File Include="Views/Web.config">
+      <publishTime>09/25/2014 11:00:15</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>09/28/2014 07:25:51</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

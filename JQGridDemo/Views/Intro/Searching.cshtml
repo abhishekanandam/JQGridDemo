@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "Searching";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Searching
+</div>
+<hr class="page-title-separator" />
+
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+
+<script>
+    var dataArray = {
+        "id": 1,
+        "jsonrpc": "2.0",
+        "total": 13,
+        "result": [
+            { FirstName: "Nancy", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/nancy.bmp" },
+            { FirstName: "Andrew", Title: "Vice President, Sales", Current: "true", PhotoPath: "http://accweb/emmployees/andrew.bmp" },
+            { FirstName: "Janet", Title: "Sales Representative", Current: "false", PhotoPath: "http://accweb/emmployees/janet.bmp" },
+            { FirstName: "Margaret", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/margaret.bmp" },
+            { FirstName: "Steven", Title: "Sales Manager", Current: "true", PhotoPath: "http://accweb/emmployees/steven.bmp" },
+            { FirstName: "Michael", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/fuller.bmp" },
+            { FirstName: "Robert", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/leverling.bmp" },
+            { FirstName: "Laura", Title: "Inside Sales Coordinator", Current: "true", PhotoPath: "http://accweb/emmployees/peacock.bmp" },
+            { FirstName: "Anne", Title: "Sales Representative", Current: "false", PhotoPath: "http://accweb/emmployees/buchanan.bmp" },
+            { FirstName: "Tom", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/tom.bmp" },
+            { FirstName: "Gerald", Title: "Sales Representative", Current: "true", PhotoPath: "http://accweb/emmployees/gerald.bmp" },
+            { FirstName: "Sharon", Title: "Office Manager", Current: "true", PhotoPath: "http://accweb/emmployees/sharon.bmp" },
+            { FirstName: "Gregory", Title: "Network Engineer", Current: "true", PhotoPath: "http://accweb/emmployees/gregory.bmp" }
+        ]
+    };
+
+    $("#JQGrid1").jqGrid({
+        datatype: "local",
+        data: dataArray.result,  
+        colModel: [
+            { name: "FirstName", label: "Name", searchoptions: { "sopt": ["bw", "eq"] } },
+            { name: "Title", label: "Title", searchoptions: { "sopt": ["bw", "cn", "eq"] } },
+            { name: "Current", label: "Current", search: false, formatter: "checkbox", width: "40px" },
+            { name: "PhotoPath", label: "Photo", search: false, formatter: "link", width: "200px" }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    });
+
+    $("#JQGrid1").jqGrid("navGrid", "#JQGrid1_pager",
+    { add: false, edit: false, del: false, search: true, view: false, refresh: true });
+</script>
+
+
+<div style="clear: both"></div>
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        Adding search functionality to a grid involves several steps:
+    </p>
+    <ol>
+        <li>By default, all columns are searchable.</li>
+        <li>In the colModel, the non-searchable columns are tagged with a <b>search:false</b> key-value pair.</li>
+        <li><b>searchoptions</b> are declared. In the code below, "bw" means "begins with", "cn" means "contains",
+            and "eq" means "equals".</li>
+        <li>In the <b>navGrid</b>, the search icons are made visible. In the code below, the add, edit, del, and view 
+            icons are invisible, while the search and refresh buttons are visible.</li>
+    </ol>
+    <img class="bordered-outline" src="~/Images/Searching.png" />
+    <p>
+        Various options are available for customizing the navigation bar, which can be viewed here:
+        <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:navigator">
+            http://www.trirand.com/jqgridwiki/doku.php?id=wiki:navigator</a>
+    </p>
+    <p>
+        <br />
+    </p>
+</div>

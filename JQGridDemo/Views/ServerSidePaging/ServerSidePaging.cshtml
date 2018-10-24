@@ -1,0 +1,290 @@
+﻿@{
+    ViewBag.Title = "ServerSidePaging";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Server-Side Paging
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+<div class="clear-both small-vertical-spacing"></div>
+<div class="page-content-offset"></div>
+<div id="divJQGrid2" class="page-content">
+    <table id="JQGrid2"></table>
+    <div id="JQGrid2_pager"></div>
+</div>
+
+<script>
+    var lastID = null;
+
+    $("#JQGrid1").jqGrid({
+        url: "/MasterDetail/OnCustomerDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "CustomerID" },
+        prmNames: { id: "CustomerID" },
+        sortname: "CompanyName",
+        sortorder: "asc",
+        colNames: [" ", "Cust ID", "Company Name", "Contact Name", "Contact Title",
+            "Address", "City", "Region", "Postal Code", "Country", "Phone", "Fax"],
+        colModel: [
+            { width: 10, name: "HasOrders", hidden: true },
+            { key: true, width: 40, name: "CustomerID" },
+            { width: 120, name: "CompanyName" },
+            { width: 90, name: "ContactName" },
+            { width: 100, name: "ContactTitle" },
+            { width: 140, name: "Address" },
+            { width: 70,  name: "City" },
+            { width: 40,  name: "Region" },
+            { width: 60,  name: "PostalCode" },
+            { width: 50,  name: "Country" },
+            { width: 75,  name: "Phone" },
+            { width: 75, name: "Fax" }
+        ],
+        caption: "Client-Side Paging Without Caching",
+        pager: "#JQGrid1_pager",
+        // Customizations
+        height: "auto",
+        viewrecords: true, // controls visibility of recordtext
+        rowNum: 5,
+        rowList: [5, 10, 20, 50, 100],
+        pager: "#JQGrid1_pager",
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+    jQuery('#JQGrid1').bindKeys(); // binds the up/down arrow keys:
+
+
+    $("#JQGrid2").jqGrid({
+        url: "/ServerSidePaging/OnCustomerDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "CustomerID" },
+        prmNames: { id: "CustomerID" },
+        sortname: "CompanyName",
+        sortorder: "asc",
+        colNames: [" ", "Cust ID", "Company Name", "Contact Name", "Contact Title",
+            "Address", "City", "Region", "Postal Code", "Country", "Phone", "Fax"],
+        colModel: [
+            { width: 10, name: "HasOrders", hidden: true },
+            { key: true, width: 40, name: "CustomerID" },
+            { width: 120, name: "CompanyName" },
+            { width: 90, name: "ContactName" },
+            { width: 100, name: "ContactTitle" },
+            { width: 140, name: "Address" },
+            { width: 70, name: "City" },
+            { width: 40, name: "Region" },
+            { width: 60, name: "PostalCode" },
+            { width: 50, name: "Country" },
+            { width: 75, name: "Phone" },
+            { width: 75, name: "Fax" }
+        ],
+        caption: "Server-Side Paging Without Caching",
+        pager: "#JQGrid2_pager",
+        // Customizations
+        height: "auto",
+        viewrecords: true, // controls visibility of recordtext
+        rowNum: 5,
+        rowList: [5, 10, 20, 50, 100],
+        pager: "#JQGrid2_pager",
+        loadError: JQGridDemo.jqGrid_aspnet_loadErrorHandler
+    });
+    jQuery('#JQGrid2').bindKeys(); // binds the up/down arrow keys:
+
+</script>
+
+
+<div style="clear: both"></div>
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+
+    @*<img class="bordered-outline" src="~/Images/ServerSidePaging_05.png" />*@  
+
+    <p>
+        The JQGrid base class defined in the Trirand.Web.Mvc namespace automatically provides, 
+        out of the box, client side paging capabilities. 
+
+    </p>
+    <p>
+        For various reasons to be discussed shortly, it may be deemed preferable to implement
+        paging on the server side.
+        Although well-optimized for client-side paging, the JQGrid class has issues if
+        presented with resultsets that have been paged on the server side.
+    <p>
+        We find that need to take one of the two following actions:
+        <ol>
+            <li>
+                We can implement workarounds for the features of the JQGrid class that are
+                incompatible with server-side paging.
+            </li>
+            <li>
+                We can abandon the use of the JQGrid class entirely, instead building our
+                JsonResults manually.
+            </li>
+        </ol>
+        The second option is entirely feasible and not at all difficult, since the structure
+        of jqGrid's JsonResponse object has been well-documented online as well as in books. 
+    </p>   
+    <p>
+        For the purposes of this tutorial, however, we will focus on the first option.
+    </p>
+    
+    <p><h2>Option 1: Workarounds Adapting the JQGrid Class to Server-Side Paging</h2></p>   
+    
+    <p>
+        In the grids shown above, please note the following features that up to now I had not yet
+        incorporated into any of the other grids in this article:
+        <ul>
+            <li>The CompanyName is the default sorted column, sorted in ascending order.</li>
+            <li>A dropdown menu shows the number of rows in the grid, and allows changing the number of rows.</li>
+            <li>The record text in the lower right of the grid has format "View&nbsp;{0}&nbsp;-&nbsp;{1}&nbsp;of&nbsp;{2}". 
+                This is the default format set in the grid.locale file in the <b>i18n</b> folder.</li>
+        </ul>
+        The first two options are set in the jqGrid options list:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_10.png" />
+
+    <p><h2>Events that occur in the built-in client-side paging</h2></p>
+
+    <p>
+        When one clicks on the pager arrow, clicks on the head of a sortable column, or changes the
+        number of rows to be displayed, the browser sends back,
+        in the GET querystring, the page number to be retrieved ("page"), the number of rows per page ("rows"), 
+        the sort column ("sidx"), and the sort direction ("sord"). 
+    </p>
+
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_15.png" />
+    <p>
+        The result set returned by the repository call is a collection of CustomerModel objects:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_18.png" />
+    <p></p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_23.png" />
+    <p>
+        The JQGrid DataBind method reads the Request QueryString for the page number, the number of rows,
+        the sort column and the sort direction.
+        In the illustrated case, DataBind sorts the IQueryable CustomerModel collection by CustomerName, 
+        skips the first 15&nbsp;rows, and takes the next 5&nbsp;rows to populate the JsonResult object.
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_20.png" />
+    <p>
+        The "Data" property of the JsonResult is a JsonResponse object that includes, among other information, 
+        the page number, the total number of records that were in the IQueryable model, a computed total
+        number of pages based on the page size and the total number of records, and the collection of rows
+        that is being returned to the browser.
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_25.png" />
+    <p>
+        The repository call was inefficient. Out of 91 rows, only five rows were returned to the browser.
+        We had earlier discussed server side caching strategies that improved the efficiency of 
+        client-side paging by avoiding repeated unnecessary repository calls when paging, sorting, 
+        or changing the table size. 
+    </p>
+    <p>
+        However, there are various situations where caching may be considered unacceptable:
+        <ul>
+            <li>Caching is unacceptable if the database records are rapidly changing and the view 
+            must be as up-to-date as possible.</li>
+            <li>Caching is unacceptable if the repository calls return massive resultsets, only a
+            few records of which are likely to be accessed.</li>
+            <li>The issues associated with massive resultsets are exascerbated if the database
+            is being accessed through a service. There may be bandwidth issues between the 
+            database service and the web server.</li>
+        </ul>
+    </p>
+    <p>
+        It is to address such issues that paging may be implemented on the server side. 
+    </p>
+    <p>
+        <h2>Events that occur in server-side paging</h2>
+    </p>
+
+    <p>
+        The browser sends back, in the GET querystring, exactly the same sort of information as was
+        sent back in client-side paging:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_30.png" />
+
+    <p>
+        There is considerably more work necessary to be done on the controller side than with
+        client-side paging. The controller needs to read the page, rows, sidx and sord from
+        the Request QueryString, and passes these values on to the repository. <span class="warning">
+        Two key lines have been commented out for the purposes of this tutorial.</span>
+</p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_35.png" />
+    <p>
+        In the case illustrated here, the repository query on the database sorts by the 
+        CompanyName column, skips 15 rows and takes 5 rows to return a resultset of 5 rows.
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_40.png" />
+    <p>
+        <span class="warning">We now encounter a problem. The JQGrid DataBind method ALSO reads
+        the page, rows, sidx and sord from the Request QueryString. It sorts the 5 rows of
+        the resultset and then skips 15 rows, passing the end of the data and returning no records. 
+        Neither can it compute the correct total number of pages to send back to the browser.
+        </span>
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_45.png" />
+    <p>
+        To fix this issue, we need to trick the JQGrid DataBind method.
+        <ul>
+            <li>We set the value of the "page" element of the Request QueryString collection to "1",
+            so that the DataBind method does not skip.</li>
+            <li>We modify the JsonResponse so to have the correct values for page, records, and total.</li>
+        </ul>
+        The Request QueryString is read-only and the JsonResponse class is private. We get around these
+        issues through the use of reflection. We define two extension methods on the Controller, 
+        SetRequestQueryStringPageToOne() and ModifyJsonResultData():
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_50.png" />
+    <p>
+        The use of these methods is illustrated here. We uncomment the two lines previously mentioned:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_55.png" />
+    <p>
+        Since page has been set to "1", DataBind does not skip and so successfully populates the JsonResponse.
+        However, the JsonResponse still has incorrect property values:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_60.png" />
+    <p>
+        The call to ModifyJsonResultData() corrects these values:
+    </p>
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_65.png" />
+
+    <p><h2>Option 2: Building the JsonResponse Object Completely From Scratch</h2></p>   
+
+    <p>
+        The official documentation describing the structure of the Json result expected by
+        the jqGrid JavaScript may be found here:
+        <br/>
+        <a href="http://www.trirand.com/jqgridwiki/doku.php?id=wiki:retrieving_data">
+        http://www.trirand.com/jqgridwiki/doku.php?id=wiki:retrieving_data</a>
+    </p>
+    <p>
+        jqGrid expects the following default format for JSON data.
+    </p> 
+    <img class="bordered-outline" src="~/Images/ServerSidePaging_70.png" />
+    <p>
+
+    </p>
+        In brief, one creates a view model of the grid, then serializes the model into a Json 
+        representation of the model which is what is actually returned to the browser. 
+    <p>
+
+
+    </p>
+
+
+
+<p>
+        <br />
+    </p>
+</div>

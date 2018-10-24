@@ -1,0 +1,93 @@
+﻿@{
+    ViewBag.Title = "Employees";
+    Layout = "~/Views/Shared/_SiteMasterPageLayout.cshtml";
+}
+<div class="page-title-offset"></div>
+<div class="page-title">
+    Getting Data from a Backend
+</div>
+<hr class="page-title-separator" />
+
+<div class="page-content-offset"></div>
+<div class="page-content">
+    <table id="JQGrid1"></table>
+    <div id="JQGrid1_pager"></div>
+</div>
+
+<script>
+    $("#JQGrid1").jqGrid({
+        url: "/Employee/OnEmployeeDataRequested",
+        mtype: "GET",
+        datatype: "json",
+        page: 1,
+        jsonReader: { id: "EmployeeID" },
+        prmNames: { id: "EmployeeID" },
+        colNames: ["EmployeeID", "Last Name", "First Name", "Title", "Birth Date", "Hire Date",
+            "Address", "City", "Region", "Postal Code", "Country", "Home Phone", "Ext", "Photo"],
+        colModel: [
+            { key: true, width: 50, name: "EmployeeID", hidden: true },
+            { width: 60,  name: "LastName" },
+            { width: 60,  name: "FirstName" },
+            { width: 120, name: "Title" },
+            { width: 60,  name: "BirthDate", hidden: true },
+            { width: 60,  name: "HireDate",
+              formatter: "date", formatoptions: { srcformat: "m/d/Y h:i:s A", newformat: "Y-m-d" } },
+            { width: 110, name: "Address" },
+            { width: 50,  name: "City" },
+            { width: 40,  name: "Region" },
+            { width: 60,  name: "PostalCode" },
+            { width: 50,  name: "Country" },
+            { width: 70,  name: "HomePhone" },
+            { width: 30,  name: "Extension" },
+            { width: 200, name: "PhotoPath", formatter: "link" }
+        ],
+        height: "auto",
+        caption: "Employees",
+        rowNum: 5,
+        pager: "#JQGrid1_pager"
+    });
+</script>
+
+
+<div style="clear:both" />
+<div class="page-content-offset"></div>
+<div class="page-text-block">
+    <p>
+        jqGrid uses Json to communicate between client and web server. On the server side, in the Models folder, I have 
+        created a class <b>EmployeeJQGridModel</b> that serves as a container for a <b>JQGrid</b> object. (Depending on 
+        your application, you can add other fields to the container besides the JQGrid object for its use 
+        in a strongly-typed view.)
+        <span class="warning">The <b>DataField</b> names in the contained <b>JQGrid</b> object must correspond exactly 
+        in name, number and ordering with the <b>colModel</b> names.</span> 
+    </p>
+    <img class="bordered-outline" src="~/Images/EmployeeJQGridModel.png" />
+    <img class="bordered-outline" src="~/Images/Employee.png" />
+    <p>
+        Note that several columns have been tagged as <b>hidden</b>.
+    </p>
+    <p>
+        The jqGrid() code on the client begins rendering the grid html, and when the point is reached where the
+        rendering code needs data from the web server, it issues a "GET" request to the indicated <b>url</b> 
+        ("/Employee/OnEmployeeDataRequested"). This request is received by the controller, which queries 
+        the database. Fields in the resultset that match corresponding DataFields in the JQGrid object are 
+        converted to a JsonResult by the JQGrid <b>DataBind()</b> method, which accepts an <b>IQueryable</b> object
+        as input. Note the use of the <b>AsQueryable()</b> 
+        method. In this particular case, the result set is already an IQueryable, so use of this
+        method is redundant; <span class="warning">however, other types of collection that may be 
+        returned by a data source such as List<>s and arrays cannot be bound to the JQGrid, so 
+        routine use of AsQueryable() can save considerable headache. If you forget to convert to
+        IQueryable, you will not have any useful warning message
+        telling you to use an IQueryable object; the grid just won't populate.</span>   
+    </p>
+    <img class="bordered-outline" src="~/Images/Employee-controller.png" />
+    <p>
+        You might also wish to take note of the date formatter that I used to convert from the format used in the
+        Json string to what we in the .NET world would call "yyyy-MM-dd" format. jqGrid date format strings follow
+        PHP standards rather than following .NET conventions. For a complete list of PHP date formatters, see
+        <a href="http://php.net/manual/en/function.date.php">http://php.net/manual/en/function.date.php</a>
+    </p>
+    <p>
+        <br />
+    </p>
+</div>
+

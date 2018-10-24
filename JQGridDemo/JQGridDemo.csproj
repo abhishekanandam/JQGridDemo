@@ -1,0 +1,427 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{01B9921A-D217-4772-B3BC-A9FF65C05F73}</ProjectGuid>
+    <ProjectTypeGuids>{E3E379DF-F4C6-4180-9B81-6769533ABE47};{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>JQGridDemo</RootNamespace>
+    <AssemblyName>JQGridDemo</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.5\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Caching" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.4.0.20710.0\lib\net40\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.2.0.20710.0\lib\net40\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.2.0.20710.0\lib\net40\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="Trirand.Web.Mvc">
+      <HintPath>Content\ThirdParty\Trirand.Web.Mvc.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ControllerDataHelpers\CommonDataHelper.cs" />
+    <Compile Include="ControllerDataHelpers\ControllerJQGridHelper.cs" />
+    <Compile Include="Controllers\CachingController.cs" />
+    <Compile Include="Controllers\EventsController.cs" />
+    <Compile Include="Controllers\MasterDetailController.cs" />
+    <Compile Include="Controllers\MovingTargetController.cs" />
+    <Compile Include="Controllers\OtherFeaturesController.cs" />
+    <Compile Include="Controllers\ServerSidePagingController.cs" />
+    <Compile Include="Controllers\ServerValidationController.cs" />
+    <Compile Include="CustomExceptions\FailedToRetrieveStatesException.cs" />
+    <Compile Include="CustomExceptions\ValidationException.cs" />
+    <Compile Include="Filters\ControllerExceptionHandlerAttribute.cs" />
+    <Compile Include="Filters\JQGridPostExceptionHandlerAttribute.cs" />
+    <Compile Include="Models\CustomerJQGridModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\DropdownDemoJQGridModel.cs" />
+    <Compile Include="Models\DropdownDemoModel.cs" />
+    <Compile Include="Models\InitialSetupJQGridModel.cs" />
+    <Compile Include="Models\OrderJQGridModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Repositories\CustomerOrdersRepository.cs" />
+    <Compile Include="Repositories\ErrorMessageRepository.cs" />
+    <Compile Include="Repositories\GenericRepository.cs" />
+    <Compile Include="Repositories\GenericRepositoryClasses.cs" />
+    <Compile Include="Repositories\IGenericRepository.cs" />
+    <Compile Include="Controllers\EditingController.cs" />
+    <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IntroController.cs" />
+    <Compile Include="Controllers\SearchingController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Customer.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Employee.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EmployeeJQGridModel.cs" />
+    <Compile Include="Models\Northwind.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Northwind.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Northwind.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Northwind.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Northwind.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Order_Detail.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Product.cs">
+      <DependentUpon>Northwind.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Content Include="Content\jquery\i18n\grid.locale-en.js" />
+    <Content Include="Content\themes\cupertino\images\animated-overlay.gif" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_diagonals-thick_90_eeeeee_40x40.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_0_aaaaaa_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_15_cd0a0a_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_flat_75_ffffff_40x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_100_e4f1fb_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_50_3baae3_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_80_d7ebf9_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glass_95_fef1ec_1x400.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glow-ball_0_003366_600x600.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glow-ball_0_336699_600x600.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glow-ball_0_eebb22_600x600.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_glow-ball_75_ffcc33_600x600.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_100_f2f5f7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-hard_70_000000_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_100_deedf7_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-bg_highlight-soft_25_ffef8f_1x100.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_111111_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2694e8_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_2e83ff_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_3d80b3_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_454545_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_72a7cf_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_888888_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_cd0a0a_256x240.png" />
+    <Content Include="Content\themes\cupertino\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\cupertino\jquery-ui.css" />
+    <Content Include="Content\themes\cupertino\jquery-ui.min.css" />
+    <Content Include="Content\themes\cupertino\theme.css" />
+    <Content Include="Content\themes\ui-lightness\images\animated-overlay.gif" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_diagonals-thick_18_b81900_40x40.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_diagonals-thick_20_666666_40x40.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_flat_10_000000_40x100.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_glass_100_f6f6f6_1x400.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_glass_100_fdf5ce_1x400.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_glass_65_ffffff_1x400.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_gloss-wave_35_f6a828_500x100.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_highlight-soft_100_eeeeee_1x100.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-bg_highlight-soft_75_ffe45c_1x100.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-icons_222222_256x240.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-icons_228ef1_256x240.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-icons_ef8c08_256x240.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-icons_ffd27a_256x240.png" />
+    <Content Include="Content\themes\ui-lightness\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\themes\ui-lightness\jquery-ui.css" />
+    <Content Include="Content\themes\ui-lightness\jquery-ui.min.css" />
+    <Content Include="Content\themes\ui-lightness\theme.css" />
+    <Content Include="Content\Stylesheets\ui.jqgrid.css" />
+    <None Include="Content\jquery\jquery-2.1.1-vsdoc.js" />
+    <Content Include="Content\jquery\jquery-2.1.1.min.js" />
+    <Content Include="Content\jquery\jquery-ui-1.10.4.min.js" />
+    <Content Include="Content\jquery\jquery.jqGrid.min.js" />
+    <None Include="Content\jquery\jquery.validate-vsdoc.js" />
+    <Content Include="Content\jquery\jquery.validate.min.js" />
+    <Content Include="Content\Scripts\JQGridDemo.js" />
+    <Content Include="Content\Stylesheets\css_flyoutverticalmenu.css" />
+    <Content Include="Content\Stylesheets\jquery-ui.theme.min.css" />
+    <Content Include="Content\Stylesheets\JQGridDemo.css" />
+    <Content Include="Images\Caching.png" />
+    <Content Include="Images\Caching_2.png" />
+    <Content Include="Images\Caching_3.png" />
+    <Content Include="Images\EvolvingTool.png" />
+    <Content Include="Images\EvolvingTool_1.png" />
+    <Content Include="Images\EvolvingTool_2.png" />
+    <Content Include="Images\EvolvingTool_3.png" />
+    <Content Include="Images\ExceptBad.png" />
+    <Content Include="Images\ExceptConn.png" />
+    <Content Include="Images\Exporting.png" />
+    <Content Include="Images\Exporting_1.png" />
+    <Content Include="Images\HarnessingEvents_3.png" />
+    <Content Include="Images\HarnessingEvents_4.png" />
+    <Content Include="Images\HarnessingEvents_5.png" />
+    <Content Include="Images\InlineEditing.png" />
+    <Content Include="Images\InlineEditing_1.png" />
+    <Content Include="Images\MasterDetail.png" />
+    <Content Include="Images\ServerSidePaging_05.png" />
+    <Content Include="Images\ServerSidePaging_10.png" />
+    <Content Include="Images\ServerSidePaging_15.png" />
+    <Content Include="Images\ServerSidePaging_18.png" />
+    <Content Include="Images\ServerSidePaging_20.png" />
+    <Content Include="Images\ServerSidePaging_23.png" />
+    <Content Include="Images\ServerSidePaging_25.png" />
+    <Content Include="Images\ServerSidePaging_30.png" />
+    <Content Include="Images\ServerSidePaging_35.png" />
+    <Content Include="Images\ServerSidePaging_40.png" />
+    <Content Include="Images\ServerSidePaging_45.png" />
+    <Content Include="Images\ServerSidePaging_50.png" />
+    <Content Include="Images\ServerSidePaging_55.png" />
+    <Content Include="Images\ServerSidePaging_60.png" />
+    <Content Include="Images\ServerSidePaging_65.png" />
+    <Content Include="Images\ServerSidePaging_70.png" />
+    <Content Include="Images\Validation_1.png" />
+    <Content Include="Images\Validation_2.png" />
+    <Content Include="Images\Validation_3.png" />
+    <Content Include="Lib\README.TXT" />
+    <Content Include="Lib\Trirand.Web.Mvc.dll" />
+    <Content Include="Global.asax" />
+    <Content Include="Images\AddEditDelete.png" />
+    <Content Include="Images\CaptionsAndAutoHeight.png" />
+    <Content Include="Images\ClientSideSearchSetup.png" />
+    <Content Include="Images\CustomValidation.png" />
+    <Content Include="Images\EditEmployeeData.png" />
+    <Content Include="Images\Employee-controller.png" />
+    <Content Include="Images\Employee.png" />
+    <Content Include="Images\EmployeeJQGridModel.png" />
+    <Content Include="Images\Exception_0.png" />
+    <Content Include="Images\Exception_1.png" />
+    <Content Include="Images\Exception_10.png" />
+    <Content Include="Images\Exception_11.png" />
+    <Content Include="Images\Exception_12.png" />
+    <Content Include="Images\Exception_13.png" />
+    <Content Include="Images\Exception_2.png" />
+    <Content Include="Images\Exception_3.png" />
+    <Content Include="Images\Exception_4.png" />
+    <Content Include="Images\Exception_5.png" />
+    <Content Include="Images\Exception_6.png" />
+    <Content Include="Images\Exception_7.png" />
+    <Content Include="Images\Exception_8.png" />
+    <Content Include="Images\Exception_9.png" />
+    <Content Include="Images\FirstGrid-html.png" />
+    <Content Include="Images\FirstGrid.png" />
+    <Content Include="Images\Formatting.png" />
+    <Content Include="Images\HarnessingEvents.png" />
+    <Content Include="Images\HarnessingEvents_2.png" />
+    <Content Include="Images\Paging-html.png" />
+    <Content Include="Images\Paging.png" />
+    <Content Include="Images\Searching.png" />
+    <Content Include="Images\SetupEmployee.png" />
+    <Content Include="Images\Validation.png" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Views\Intro\FirstGrid.cshtml" />
+    <Content Include="Views\Intro\InitialSetup.cshtml" />
+    <Content Include="Views\Intro\CaptionAndAutoHeight.cshtml" />
+    <Content Include="Views\Intro\Paging.cshtml" />
+    <Content Include="Views\Intro\Formatting.cshtml" />
+    <EntityDeploy Include="Models\Northwind.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Northwind.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\Northwind.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Northwind.edmx</DependentUpon>
+      <LastGenOutput>Northwind.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\Northwind.edmx.diagram">
+      <DependentUpon>Northwind.edmx</DependentUpon>
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Models\Northwind.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Northwind.edmx</DependentUpon>
+      <LastGenOutput>Northwind.cs</LastGenOutput>
+    </Content>
+    <Content Include="Views\Intro\Searching.cshtml" />
+    <Content Include="Views\Employee\Employees.cshtml" />
+    <Content Include="Views\Searching\SearchingRevisited.cshtml" />
+    <Content Include="Views\Editing\AddEditDelete.cshtml" />
+    <Content Include="Views\Editing\Validation.cshtml" />
+    <Content Include="Views\Caching\MemoryCaching.cshtml" />
+    <Content Include="Views\ServerValidation\ValidationAndExceptions.cshtml" />
+    <Content Include="Views\MasterDetail\MasterDetailGrids.cshtml" />
+    <Content Include="Views\Events\HarnessingEvents.cshtml" />
+    <Content Include="Views\OtherFeatures\Exporting.cshtml" />
+    <Content Include="Views\Editing\InlineEditing.cshtml" />
+    <Content Include="Views\MovingTarget\AnEvolvingTool.cshtml" />
+    <None Include="Properties\PublishProfiles\JQGridDemoOnStage.pubxml" />
+    <Content Include="Views\ServerSidePaging\ServerSidePaging.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Home\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_SiteMasterPageLayout.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\jquery\jquery-2.1.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:1526/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>
